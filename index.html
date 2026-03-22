@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USSH - Phúc Lộc Thọ | Trang chủ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --primary-red: #D32F2F; 
+            --soft-red: #FFEBEE;
+            --accent-red: #EF5350;
+            --text-dark: #2D3436;
+            --glass: rgba(255, 255, 255, 0.95);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { color: var(--text-dark); background-color: #fff; line-height: 1.6; }
+
+        /* --- Header --- */
+        header {
+            position: fixed; top: 0; width: 100%;
+            padding: 15px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.1);
+        }
+
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; position: relative; z-index: 2; }
+        .logo img { height: 50px; }
+        .logo-text { font-weight: 800; font-size: 1.4rem; color: var(--primary-red); letter-spacing: -0.5px; }
+
+        /* --- CỤM 3 LOGO Ở GIỮA --- */
+        .header-center {
+            display: flex;
+            gap: 20px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        .header-center a {
+            display: block;
+            width: 50px; /* To bằng logo USSH */
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+            background: white;
+        }
+        .header-center a:hover {
+            transform: scale(1.15) translateY(-2px);
+            border-color: var(--primary-red);
+            box-shadow: 0 8px 15px rgba(211,47,47,0.3);
+        }
+        .header-center img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        nav { position: relative; z-index: 2; }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        nav a:hover { color: var(--primary-red); }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh; width: 100%;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white;
+            position: relative; overflow: hidden; 
+        }
+
+        .hero-content { 
+            max-width: 900px; padding: 0 20px; animation: fadeInUp 1s ease; 
+            z-index: 1; 
+        }
+
+        .hero h1 { font-size: 3.8rem; font-weight: 800; margin-bottom: 20px; line-height: 1.2; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.25rem; opacity: 0.9; margin-bottom: 35px; font-weight: 300; }
+        
+        .btn-cta {
+            background: var(--primary-red); color: white; padding: 16px 45px;
+            border-radius: 50px; text-decoration: none; font-weight: 800;
+            display: inline-block; transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(211, 47, 47, 0.3);
+        }
+        .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(211, 47, 47, 0.4); background: var(--accent-red); }
+
+        /* --- Sections --- */
+        section { padding: 100px 10%; }
+        .section-title { text-align: center; font-size: 2.5rem; color: var(--primary-red); margin-bottom: 60px; font-weight: 800; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { 
+            background: white; padding: 45px; border-radius: 25px; 
+            border: 1px solid var(--soft-red); transition: var(--transition); 
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent-red); box-shadow: var(--shadow); }
+        .card .icon { font-size: 3rem; margin-bottom: 20px; display: block; }
+        .card h3 { color: var(--primary-red); margin-bottom: 15px; font-size: 1.6rem; }
+
+        /* --- Contact & Maps --- */
+        .contact-container {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
+            background: var(--soft-red); padding: 50px; border-radius: 35px;
+        }
+        .contact-info h2 { color: var(--primary-red); margin-bottom: 20px; font-size: 2rem; }
+        .member-list { list-style: none; margin: 25px 0; }
+        .member-list li { padding: 12px 0; border-bottom: 1px solid rgba(211, 47, 47, 0.1); font-weight: 600; font-size: 1.1rem; }
+        
+        .map-box { border-radius: 20px; overflow: hidden; border: 8px solid white; box-shadow: var(--shadow); height: 400px; }
+
+        /* =========================================
+           CHATBOT CSS
+           ========================================= */
+        #chat-trigger {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 65px; height: 65px; background: var(--primary-red);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 10px 25px rgba(211, 47, 47, 0.4); z-index: 1001;
+            transition: var(--transition);
+        }
+        #chat-trigger:hover { transform: scale(1.1) rotate(5deg); }
+
+        #chat-window {
+            position: fixed; bottom: 105px; right: 30px;
+            width: 360px; height: 520px; background: white;
+            border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            display: none; flex-direction: column; overflow: hidden; z-index: 1001;
+            animation: slideIn 0.4s ease;
+        }
+
+        .chat-header { background: var(--primary-red); color: white; padding: 20px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #fdfdfd; }
+        .msg { padding: 12px 18px; border-radius: 20px; font-size: 0.95rem; max-width: 85%; line-height: 1.4; }
+        .msg.bot { background: var(--soft-red); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--primary-red); }
+        .msg.user { background: var(--primary-red); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+
+        .chat-input { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #eee; background: white; }
+        .chat-input input { flex: 1; border: 1.5px solid #eee; padding: 12px 20px; border-radius: 30px; outline: none; transition: 0.3s; }
+        .chat-input input:focus { border-color: var(--primary-red); }
+
+        /* =========================================
+           GPA CALCULATOR CSS 
+           ========================================= */
+        #gpa-trigger {
+            position: fixed; bottom: 30px; left: 30px;
+            width: 65px; height: 65px; 
+            background: var(--primary-red); 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 10px 25px rgba(211, 47, 47, 0.4); z-index: 1001;
+            transition: var(--transition);
+        }
+        #gpa-trigger:hover { transform: scale(1.1) rotate(-5deg); }
+
+        #gpa-window {
+            position: fixed; bottom: 105px; left: 30px;
+            width: 360px; max-height: 550px; background: white;
+            border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            display: none; flex-direction: column; overflow: hidden; z-index: 1001;
+            animation: slideIn 0.4s ease;
+        }
+
+        .gpa-header { background: #2D3436; color: white; padding: 20px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        
+        .gpa-tabs { display: flex; border-bottom: 1px solid #eee; background: #fafafa;}
+        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-weight: 800; color: #999; cursor: pointer; transition: 0.3s; font-size: 0.9rem;}
+        .tab-btn.active { color: var(--primary-red); border-bottom: 3px solid var(--primary-red); background: white;}
+        
+        .gpa-body { padding: 20px; overflow-y: auto; background: #fdfdfd; display: flex; flex-direction: column; gap: 15px; max-height: 350px; }
+        
+        .subject-row { display: flex; gap: 10px; align-items: center; animation: fadeInUp 0.3s ease; }
+        .subject-row input { width: 80px; padding: 10px; border: 1.5px solid #eee; border-radius: 10px; outline: none; text-align: center; font-weight: 600;}
+        .subject-row select { flex: 1; padding: 10px; border: 1.5px solid #eee; border-radius: 10px; outline: none; font-weight: 600;}
+        .subject-row .btn-remove { background: var(--soft-red); color: var(--primary-red); border: none; width: 35px; height: 35px; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.2s;}
+        .subject-row .btn-remove:hover { background: var(--primary-red); color: white; }
+
+        .target-input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+        .target-input-group label { font-size: 0.9rem; font-weight: 600; color: #555; }
+        .target-input-group input { padding: 12px; border: 1.5px solid #eee; border-radius: 10px; outline: none; font-weight: 600; width: 100%;}
+        .target-input-group input:focus { border-color: var(--primary-red); }
+
+        .gpa-actions { display: flex; flex-direction: column; gap: 10px; padding: 0 20px 20px 20px; background: #fdfdfd; border-top: 1px solid transparent;}
+        .btn-add-subject { background: #f0f0f0; color: #333; border: none; padding: 12px; border-radius: 15px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .btn-add-subject:hover { background: #e0e0e0; }
+        
+        .btn-calc-gpa { background: var(--primary-red); color: white; border: none; padding: 15px; border-radius: 15px; cursor: pointer; font-weight: 800; font-size: 1.1rem; transition: 0.2s; box-shadow: 0 5px 15px rgba(211,47,47,0.3); width: 100%;}
+        .btn-calc-gpa:hover { background: var(--accent-red); transform: translateY(-2px); }
+
+        .gpa-result-box { text-align: center; padding: 15px; background: var(--soft-red); border-radius: 15px; border: 2px dashed var(--primary-red); margin-bottom: 10px; display: none; }
+        .gpa-result-box span { display: block; font-size: 2rem; font-weight: 800; color: var(--primary-red); }
+
+        /* --- Footer --- */
+        footer { background: #1a1a1a; color: white; padding: 60px 10% 40px; text-align: center; }
+        footer p { opacity: 0.7; font-size: 0.9rem; margin-top: 10px; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 992px) {
+            .header-center { display: none; } /* Ẩn 3 logo giữa trên màn hình nhỏ để tránh đè text */
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .contact-container { grid-template-columns: 1fr; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNLG2poUhW72ORKbqy3xmyk7q3Q4HAtfcVpw&s" alt="Logo USSH">
+            <span class="logo-text">USSH - PHÚC LỘC THỌ</span>
+        </a>
+        
+        <div class="header-center">
+            <a href="#phuc" title="Chuyển đến Phúc">
+                <img src="https://drive.google.com/thumbnail?id=1nJl5IOkhNSYsCo36UvJN_jTGce47YRIm&sz=w150" alt="Logo Phúc">
+            </a>
+            <a href="#loc" title="Chuyển đến Lộc">
+                <img src="https://drive.google.com/thumbnail?id=18Q0qqXL-VHsz-jz2hdy02bzyNytI4deQ&sz=w150" alt="Logo Lộc">
+            </a>
+            <a href="#tho" title="Chuyển đến Thọ">
+                <img src="https://drive.google.com/thumbnail?id=13GHW9tzNYNvN9YT6qa3BaGM_iAXt9MWu&sz=w150" alt="Logo Thọ">
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="#trang-chu">Trang chủ</a></li>
+                <li><a href="#phuc">Phúc</a></li>
+                <li><a href="#loc">Lộc</a></li>
+                <li><a href="#tho">Thọ</a></li>
+                <li><a href="#lien-he">Liên hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="trang-chu" class="hero">
+        <img src="https://drive.google.com/thumbnail?id=1jw4tcetWYg2pnfOYUxlpvWwYNT4H3tFe&sz=w1920"   
+             alt="Background"
+             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: brightness(0.6);">
+        <div class="hero-content">
+            <h1>Trường Đại học <br> Khoa học Xã hội và Nhân văn</h1>
+            <p>Trân trọng giá trị truyền thống — Kiến tạo tương lai nhân văn</p>
+            <a href="#phuc" class="btn-cta">TÌM HIỂU THÊM</a>
+        </div>
+    </section>
+
+    <section id="phuc">
+        <h2 class="section-title">Giá trị "Phúc"</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="icon">🌸</span>
+                <h3>Tâm An Nhuận</h3>
+                <p>Môi trường giáo dục đề cao sự tử tế, nơi sinh viên được nuôi dưỡng lòng nhân ái và sự an yên trong tâm hồn.</p>
+            </div>
+            <div class="card">
+                <span class="icon">🏠</span>
+                <h3>Mái Nhà Chung</h3>
+                <p>USSH không chỉ là trường học, mà là cộng đồng nơi mọi thành viên gắn kết như một gia đình hạnh phúc.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="loc" style="background: var(--soft-red);">
+        <h2 class="section-title">Giá trị "Lộc"</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="icon">📜</span>
+                <h3>Lộc Tri Thức</h3>
+                <p>Tiếp nhận tinh hoa nhân loại từ đội ngũ giảng viên là những chuyên gia, học giả đầu ngành của Việt Nam.</p>
+            </div>
+            <div class="card">
+                <span class="icon">💎</span>
+                <h3>Cơ Hội Vàng</h3>
+                <p>Mạng lưới đối tác toàn cầu mang đến hàng ngàn cơ hội thực tập và việc làm danh giá cho sinh viên.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="tho">
+        <h2 class="section-title">Giá trị "Thọ"</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="icon">🏛️</span>
+                <h3>Di Sản Trường Tồn</h3>
+                <p>Kế thừa nền tảng của Đại học Văn khoa, USSH tự hào với bề dày lịch sử hơn 75 năm phát triển rực rỡ.</p>
+            </div>
+            <div class="card">
+                <span class="icon">🌳</span>
+                <h3>Giá Trị Bền Vững</h3>
+                <p>Kiến thức khoa học xã hội là nền tảng vững chắc nhất để con người phát triển bền bỉ trong kỷ nguyên số.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="lien-he">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Thông tin nhóm</h2>
+                <p><strong>Dự án:</strong> Phúc Lộc Thọ</p>
+                <p><strong>Học phần:</strong> Công nghệ truyền thông số</p>
+                <p><strong>Mã lớp học phần:</strong> JOU3087 24.BC.B 1</p>
+                <p><strong>Giảng viên:</strong> TS. Nguyễn Đình Hậu</p>
+                <ul class="member-list">
+                    <li>👤 17. Âu Khánh Ngân <i>(24030105)</i></li>
+                    <li>👤 26. Nguyễn Tuyết Nhung <i>(24030120)</i></li>
+                    <li>👤 42. Phạm Đình Tú <i>(24030171)</i></li>
+                </ul>
+                <p>📍 Địa chỉ: 336 Nguyễn Trãi, Thanh Xuân, Hà Nội</p>
+                <p>📧 Email: contact@ussh.edu.vn</p>
+            </div>
+            <div class="map-box">
+                <iframe src="https://maps.google.com/maps?q=Trường%20Đại%20học%20Khoa%20học%20Xã%20hội%20và%20Nhân%20văn%20-%20ĐHQGHN,%20336%20Nguyễn%20Trãi&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <h3>TRƯỜNG ĐẠI HỌC KHOA HỌC XÃ HỘI VÀ NHÂN VĂN, ĐHQGHN</h3>
+        <p>Địa chỉ: 336 Nguyễn Trãi, Thanh Xuân, Hà Nội</p>
+        <p>©2026 Nhóm Phúc Lộc Thọ. Thiết kế bởi nhóm sinh viên lớp Công nghệ truyền thông số (2026.01 CNTTS T3).</p>
+    </footer>
+
+    <div id="gpa-window">
+        <div class="gpa-header">
+            <span>📊 Bảng Tính GPA</span>
+            <span style="cursor:pointer" onclick="toggleGPA()">✕</span>
+        </div>
+        <div class="gpa-tabs">
+            <button class="tab-btn active" id="btn-tab-calc" onclick="switchTab('calc')">TÍNH KỲ NÀY</button>
+            <button class="tab-btn" id="btn-tab-target" onclick="switchTab('target')">MỤC TIÊU</button>
+        </div>
+
+        <div id="tab-calc" style="display: block;">
+            <div class="gpa-body" id="subject-list">
+                <div class="gpa-result-box" id="gpa-result-box">
+                    Điểm GPA hệ 4:
+                    <span id="final-gpa">0.00</span>
+                </div>
+                <div class="subject-row">
+                    <input type="number" class="credit-input" placeholder="Số TC" min="1" max="10">
+                    <select class="grade-input">
+                        <option value="" disabled selected>Chọn điểm</option>
+                        <option value="4.0">A+ (4.0)</option>
+                        <option value="3.7">A (3.7)</option>
+                        <option value="3.5">B+ (3.5)</option>
+                        <option value="3.0">B (3.0)</option>
+                        <option value="2.5">C+ (2.5)</option>
+                        <option value="2.0">C (2.0)</option>
+                        <option value="1.5">D+ (1.5)</option>
+                        <option value="1.0">D (1.0)</option>
+                        <option value="0.0">F (0.0)</option>
+                    </select>
+                    <button class="btn-remove" onclick="removeSubject(this)">✕</button>
+                </div>
+            </div>
+            <div class="gpa-actions">
+                <button class="btn-add-subject" onclick="addSubject()">+ Thêm môn học</button>
+                <button class="btn-calc-gpa" onclick="calculateGPA()">TÍNH GPA NGAY</button>
+            </div>
+        </div>
+
+        <div id="tab-target" style="display: none;">
+            <div class="gpa-body">
+                <div class="gpa-result-box" id="target-result-box" style="text-align: left; font-size: 0.95rem;"></div>
+                <div class="target-input-group">
+                    <label>GPA hiện tại (VD: 3.2)</label>
+                    <input type="number" id="target-g0" step="0.01" min="0" max="4">
+                </div>
+                <div class="target-input-group">
+                    <label>Tổng tín chỉ ĐÃ học (VD: 90)</label>
+                    <input type="number" id="target-t0" min="1">
+                </div>
+                <div class="target-input-group">
+                    <label>Tổng tín chỉ CÒN LẠI (VD: 30)</label>
+                    <input type="number" id="target-tr" min="1">
+                </div>
+                <div class="target-input-group">
+                    <label>GPA mục tiêu (VD: 3.6)</label>
+                    <input type="number" id="target-gm" step="0.01" min="0" max="4">
+                </div>
+            </div>
+            <div class="gpa-actions">
+                <button class="btn-calc-gpa" onclick="calculateTarget()">PHÂN TÍCH MỤC TIÊU</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gpa-trigger" onclick="toggleGPA()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+            <path d="M19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 4v4H7V6h10zm-6 7h-2v-2h2v2zm0 4h-2v-2h2v2zm4-4h-2v-2h2v2zm0 4h-2v-2h2v2zM9 13H7v-2h2v2zm0 4H7v-2h2v2z"/>
+        </svg>
+    </div>
+
+    <div id="chat-window">
+        <div class="chat-header">
+            <span>Trợ lý ảo USSH</span>
+            <span style="cursor:pointer" onclick="toggleChat()">✕</span>
+        </div>
+        <div class="chat-body" id="chat-content">
+            <div class="msg bot">Chào bạn! Mình là trợ lý Phúc Lộc Thọ. Bạn cần hỗ trợ gì về thông tin trường không? 😊</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input-text" placeholder="Hỏi về địa chỉ, học phí..." onkeypress="if(event.key==='Enter') handleChat()">
+            <button onclick="handleChat()" style="background:none; border:none; color:var(--primary-red); font-weight:800; cursor:pointer">GỬI</button>
+        </div>
+    </div>
+
+    <div id="chat-trigger" onclick="toggleChat()">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+        </svg>
+    </div>
+
+    <script>
+        // --- CHATBOT LOGIC ---
+        const botData = [
+            { keys: ["địa chỉ", "ở đâu"], ans: "Trường có địa chỉ ở số 336 Nguyễn Trãi, Thanh Xuân, Hà Nội." },
+            { keys: ["website", "trang web"], ans: "Bạn có thể truy cập tại: https://ussh.vnu.edu.vn." },
+            { keys: ["hotline", "số điện thoại", "liên hệ"], ans: "Hotline tuyển sinh: 0862.155.299 hoặc (024) 3858.3957." },
+            { keys: ["fanpage", "facebook"], ans: "Fanpage chính thức: 'Trường Đại học Khoa học Xã hội và Nhân văn - ĐHQGHN'." },
+            { keys: ["thời gian làm việc", "giờ làm việc"], ans: "Sáng từ 8h00 - 12h00, chiều từ 13h30 - 17h30 (từ thứ 2 đến thứ 6)." },
+            { keys: ["phương thức", "xét tuyển bằng", "tuyển sinh theo"], ans: "Thường gồm: Xét điểm thi THPT, xét điểm thi ĐGNL (HSA), xét tuyển thẳng và chứng chỉ quốc tế (IELTS, SAT...)." },
+            { keys: ["đăng ký xét tuyển", "cách đăng ký"], ans: "Bạn đăng ký trực tuyến qua cổng thông tin của Bộ GD&ĐT hoặc theo hướng dẫn riêng tại web tuyển sinh của trường." },
+            { keys: ["chuyển ngành", "đổi ngành"], ans: "Có, nếu bạn đáp ứng đủ điều kiện về điểm đầu vào và kết quả học tập năm đầu theo quy chế của ĐHQGHN." },
+            { keys: ["học phí", "tiền học"], ans: "Học phí dao động tùy theo ngành (ngành chuẩn, ngành chất lượng cao hoặc tự chủ tài chính). Trung bình từ 15 - 35 triệu VNĐ/năm." },
+            { keys: ["loại học bổng", "có học bổng"], ans: "Học bổng khuyến khích học tập (theo kỳ), học bổng của các doanh nghiệp/tổ chức và học bổng trao đổi quốc tế." },
+            { keys: ["nhận học bổng", "điều kiện học bổng", "khuyến khích học tập"], ans: "Bạn cần có điểm trung bình học tập từ loại Khá trở lên và điểm rèn luyện tốt, không bị kỷ luật." },
+            { keys: ["miễn giảm", "giảm học phí"], ans: "Có, dành cho đối tượng chính sách, vùng sâu vùng xa, hộ nghèo theo quy định của Nhà nước." },
+            { keys: ["hạn nộp học phí", "khi nào nộp", "khi nào đóng"], ans: "Thường vào giữa học kỳ qua hệ thống thanh toán trực tuyến của trường." },
+            { keys: ["bao nhiêu ngành", "các ngành"], ans: "Hiện trường đào tạo khoảng 28 ngành thuộc lĩnh vực Khoa học Xã hội và Nhân văn." },
+            { keys: ["chuẩn đầu ra", "tiếng anh", "ngoại ngữ"], ans: "Tùy theo ngành, thường yêu cầu đạt chứng chỉ B1 trở lên theo khung năng lực ngoại ngữ 6 bậc hoặc tương đương (IELTS, TOEIC...)." },
+            { keys: ["song bằng", "bằng kép"], ans: "Có, bạn có thể học thêm bằng thứ hai tại Nhân văn hoặc các trường khác trong ĐHQGHN sau khi hết năm nhất." },
+            { keys: ["ký túc xá", "ktx"], ans: "Sinh viên thường ở tại KTX Mễ Trì hoặc KTX Ngoại ngữ." },
+            { keys: ["đăng ký ktx", "vào ktx"], ans: "Bạn đăng ký trực tuyến qua website của Ban Quản lý KTX ĐHQGHN sau khi có giấy báo nhập học." },
+            { keys: ["câu lạc bộ", "clb"], ans: "Có hơn 30 CLB từ học thuật, tình nguyện đến nghệ thuật, thể thao." },
+            { keys: ["tình nguyện", "mùa hè xanh", "hoạt động"], ans: "Bạn có thể theo dõi thông tin tuyển cộng tác viên trên fanpage của Đoàn trường hoặc các Đội Tình nguyện xung kích." },
+            { keys: ["thư viện"], ans: "Thư viện nằm tại nhà M và bạn cũng có thể sử dụng Trung tâm Thư viện và Tri thức số ĐHQGHN tại Mễ Trì." },
+            { keys: ["mượn sách"], ans: "Bạn sử dụng thẻ sinh viên (hoặc thẻ tích hợp) để mượn sách trực tiếp hoặc đặt qua hệ thống online." },
+            { keys: ["wifi", "mạng"], ans: "Có, wifi phủ sóng toàn bộ khuôn viên trường dành cho cán bộ và sinh viên." },
+            { keys: ["nhà ăn", "canteen", "căng tin", "ăn uống"], ans: "Canteen nằm ở khu vực nhà B-C." },
+            { keys: ["giấy xác nhận", "xác nhận sinh viên"], ans: "Bạn đăng ký tại bộ phận Một cửa (Phòng Chính trị và Công tác Học sinh Sinh viên) tại tầng 1 nhà E." },
+            { keys: ["mất thẻ", "làm lại thẻ"], ans: "Bạn lên phòng Công tác HSSV để làm thủ tục báo mất và đăng ký cấp lại thẻ." },
+            { keys: ["đăng ký tín chỉ", "đăng ký học"], ans: "Đăng ký qua cổng thông tin portal: http://dangkyhoc.vnu.edu.vn/." },
+            { keys: ["quên mật khẩu", "mất mật khẩu"], ans: "Bạn liên hệ phòng Đào tạo để được hỗ trợ cấp lại mật khẩu." },
+            { keys: ["bảo lưu"], ans: "Bạn cần viết đơn, có minh chứng lý do và nộp tại phòng Đào tạo để được xét duyệt." },
+            { keys: ["việc làm", "thực tập", "giới thiệu"], ans: "Có, thông qua Trung tâm Hỗ trợ sinh viên và các ngày hội việc làm (Job Fair) thường niên." },
+            { keys: ["quân sự", "quốc phòng"], ans: "Sinh viên thường đi học quân sự tập trung tại Trung tâm Giáo dục Quốc phòng và An ninh ở Hòa Lạc." },
+            { keys: ["gửi xe", "để xe", "bãi xe"], ans: "Có bãi gửi xe và khu vực sân trường dành cho sinh viên." },
+            { keys: ["đồng phục", "áo trường", "áo khoa"], ans: "Bạn có thể mua tại văn phòng Đoàn thanh niên hoặc các đợt mở bán đầu năm học." },
+            { keys: ["phản ánh", "góp ý", "chất lượng"], ans: "Qua hòm thư góp ý trực tuyến hoặc các đợt khảo sát lấy ý kiến người học cuối mỗi kỳ." }
+        ];
+
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function handleChat() {
+            const input = document.getElementById('chat-input-text');
+            const content = document.getElementById('chat-content');
+            const userText = input.value.trim().toLowerCase();
+            
+            if(!userText) return;
+
+            content.innerHTML += `<div class="msg user">${input.value}</div>`;
+            input.value = '';
+
+            setTimeout(() => {
+                let reply = "Xin lỗi, câu này khó quá mình chưa có dữ liệu 😢. Bạn thử dùng các từ khóa như 'học phí', 'ký túc xá', 'tín chỉ', 'thư viện'... xem sao nhé!";
+                
+                for (let item of botData) {
+                    if (item.keys.some(key => userText.includes(key))) {
+                        reply = item.ans;
+                        break;
+                    }
+                }
+                
+                content.innerHTML += `<div class="msg bot">${reply}</div>`;
+                content.scrollTop = content.scrollHeight;
+            }, 600);
+        }
+
+        // --- GPA CALCULATOR ---
+        function toggleGPA() {
+            const gpaWin = document.getElementById('gpa-window');
+            gpaWin.style.display = (gpaWin.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function switchTab(tabId) {
+            document.getElementById('tab-calc').style.display = (tabId === 'calc') ? 'block' : 'none';
+            document.getElementById('tab-target').style.display = (tabId === 'target') ? 'block' : 'none';
+            
+            document.getElementById('btn-tab-calc').classList.toggle('active', tabId === 'calc');
+            document.getElementById('btn-tab-target').classList.toggle('active', tabId === 'target');
+        }
+
+        function addSubject() {
+            const subjectList = document.getElementById('subject-list');
+            const newRow = document.createElement('div');
+            newRow.className = 'subject-row';
+            newRow.innerHTML = `
+                <input type="number" class="credit-input" placeholder="Số TC" min="1" max="10">
+                <select class="grade-input">
+                    <option value="" disabled selected>Chọn điểm</option>
+                    <option value="4.0">A+ (4.0)</option>
+                    <option value="3.7">A (3.7)</option>
+                    <option value="3.5">B+ (3.5)</option>
+                    <option value="3.0">B (3.0)</option>
+                    <option value="2.5">C+ (2.5)</option>
+                    <option value="2.0">C (2.0)</option>
+                    <option value="1.5">D+ (1.5)</option>
+                    <option value="1.0">D (1.0)</option>
+                    <option value="0.0">F (0.0)</option>
+                </select>
+                <button class="btn-remove" onclick="removeSubject(this)">✕</button>
+            `;
+            subjectList.appendChild(newRow);
+            subjectList.scrollTop = subjectList.scrollHeight;
+        }
+
+        function removeSubject(button) {
+            const row = button.parentElement;
+            const rows = document.querySelectorAll('#tab-calc .subject-row');
+            if(rows.length > 1) {
+                row.remove();
+            } else {
+                alert("Bạn phải nhập ít nhất 1 môn học để tính!");
+            }
+        }
+
+        function calculateGPA() {
+            const rows = document.querySelectorAll('#tab-calc .subject-row');
+            let totalCredits = 0;
+            let totalPoints = 0;
+            let isValid = true;
+
+            rows.forEach(row => {
+                const creditVal = row.querySelector('.credit-input').value;
+                const gradeVal = row.querySelector('.grade-input').value;
+
+                if (creditVal && gradeVal) {
+                    const credits = parseFloat(creditVal);
+                    const grade = parseFloat(gradeVal);
+
+                    if(credits > 0) {
+                        totalCredits += credits;
+                        totalPoints += (credits * grade);
+                    }
+                } else if (creditVal || gradeVal) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                alert("Vui lòng nhập đủ số Tín chỉ và Điểm chữ cho các môn bạn đang điền!");
+                return;
+            }
+            if (totalCredits === 0) {
+                alert("Bạn chưa nhập thông tin môn học hợp lệ nào!");
+                return;
+            }
+
+            const gpa = totalPoints / totalCredits;
+            document.getElementById('final-gpa').innerText = gpa.toFixed(2);
+            document.getElementById('gpa-result-box').style.display = 'block';
+            document.getElementById('subject-list').scrollTop = 0;
+        }
+
+        function fireConfetti() {
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#D32F2F', '#FFEBEE', '#EF5350']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#D32F2F', '#FFEBEE', '#EF5350']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
+        function calculateTarget() {
+            const G0 = parseFloat(document.getElementById('target-g0').value);
+            const T0 = parseFloat(document.getElementById('target-t0').value);
+            const Tr = parseFloat(document.getElementById('target-tr').value);
+            const Gm = parseFloat(document.getElementById('target-gm').value);
+
+            if (isNaN(G0) || isNaN(T0) || isNaN(Tr) || isNaN(Gm)) {
+                alert("Vui lòng nhập đầy đủ 4 thông số!");
+                return;
+            }
+
+            const x = (Gm * (T0 + Tr) - G0 * T0) / Tr;
+            const resultBox = document.getElementById('target-result-box');
+
+            if (x > 4.0) {
+                resultBox.innerHTML = `❌ <strong>Bất khả thi!</strong><br>Bạn cần đạt GPA <strong>${x.toFixed(2)}</strong> cho phần còn lại. Mức này vượt quá trần 4.0, hãy đặt mục tiêu thấp hơn nhé.`;
+                resultBox.style.display = 'block';
+                return;
+            }
+
+            // Gọi hiệu ứng pháo giấy nếu điểm x hợp lệ (<= 4.0)
+            fireConfetti();
+
+            if (x <= 0) {
+                resultBox.innerHTML = `✅ <strong>Quá dễ dàng!</strong><br>Điểm hiện tại của bạn đã đủ cân mốc mục tiêu này. Hãy cứ học thoải mái nhé!`;
+                resultBox.style.display = 'block';
+                return;
+            }
+
+            const targetVal = (x - 3) * Tr;
+            let bestPlan = null;
+            let minA = Tr + 1;
+
+            for (let a = 0; a <= Tr; a++) {
+                for (let b = 0; b <= Tr - a; b++) {
+                    let c = Tr - a - b;
+                    if (a + 0.5 * b >= targetVal) {
+                        if (a < minA) {
+                            minA = a;
+                            bestPlan = {a, b, c};
+                        } else if (a === minA && bestPlan) {
+                            if (b < bestPlan.b) bestPlan = {a, b, c};
+                        }
+                    }
+                }
+            }
+
+            let html = `🎯 <strong>Khả thi!</strong> Bạn cần đạt GPA <strong>${x.toFixed(2)}</strong> cho ${Tr} tín chỉ còn lại.<br><hr style="margin: 10px 0; border: 0; border-top: 1px dashed var(--primary-red);">`;
+            
+            if (x <= 3.0) {
+                html += `Mục tiêu khá dễ thở, bạn chỉ cần điểm trung bình tương đương mức B trở xuống.`;
+            } else if (bestPlan) {
+                html += `<strong>Gợi ý lộ trình dễ đạt nhất:</strong><br>`;
+                html += `• <strong>${bestPlan.a}</strong> tín chỉ điểm A (4.0/3.7)<br>`;
+                html += `• <strong>${bestPlan.b}</strong> tín chỉ điểm B+ (3.5)<br>`;
+                html += `• <strong>${bestPlan.c}</strong> tín chỉ điểm B (3.0)`;
+            } else {
+                html += `Bạn cần kết hợp với điểm A+ hoặc xem lại số liệu nhập vào.`;
+            }
+
+            resultBox.innerHTML = html;
+            resultBox.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
