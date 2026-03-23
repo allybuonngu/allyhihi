@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USSH - Phúc Lộc Thọ | Trang chủ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --primary-red: #D32F2F; 
+            --soft-red: #FFEBEE;
+            --accent-red: #EF5350;
+            --text-dark: #2D3436;
+            --glass: rgba(255, 255, 255, 0.95);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { color: var(--text-dark); background-color: #fff; line-height: 1.6; }
+
+        /* --- Header --- */
+        header {
+            position: fixed; top: 0; width: 100%;
+            padding: 15px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(211, 47, 47, 0.1);
+        }
+
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; position: relative; z-index: 2; }
+        .logo img { height: 50px; }
+        .logo-text { font-weight: 800; font-size: 1.4rem; color: var(--primary-red); letter-spacing: -0.5px; }
+
+        /* --- CỤM 3 LOGO Ở GIỮA --- */
+        .header-center {
+            display: flex; gap: 20px; position: absolute; left: 50%;
+            transform: translateX(-50%); z-index: 1;
+        }
+        .header-center a {
+            display: block; width: 50px; height: 50px; border-radius: 50%;
+            overflow: hidden; border: 2px solid transparent;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: var(--transition); background: white;
+        }
+        .header-center a:hover {
+            transform: scale(1.15) translateY(-2px); border-color: var(--primary-red);
+            box-shadow: 0 8px 15px rgba(211,47,47,0.3);
+        }
+        .header-center img { width: 100%; height: 100%; object-fit: cover; }
+
+        nav { position: relative; z-index: 2; }
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.95rem; transition: var(--transition); }
+        nav a:hover { color: var(--primary-red); }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white; position: relative; overflow: hidden; 
+        }
+
+        .hero-content { max-width: 900px; padding: 0 20px; animation: fadeInUp 1s ease; z-index: 1; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 35px; line-height: 1.2; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        
+        .btn-cta {
+            background: var(--primary-red); color: white; padding: 16px 45px;
+            border-radius: 50px; text-decoration: none; font-weight: 800;
+            display: inline-block; transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(211, 47, 47, 0.3);
+        }
+        .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(211, 47, 47, 0.4); background: var(--accent-red); }
+
+        /* --- Sections --- */
+        section { padding: 100px 10%; }
+        .section-title { text-align: center; font-size: 2.5rem; color: var(--primary-red); margin-bottom: 60px; font-weight: 800; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card { 
+            background: white; padding: 45px; border-radius: 25px; 
+            border: 1px solid var(--soft-red); transition: var(--transition); 
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent-red); box-shadow: var(--shadow); }
+        .card .icon { font-size: 3rem; margin-bottom: 20px; display: block; }
+        .card h3 { color: var(--primary-red); margin-bottom: 15px; font-size: 1.6rem; }
+
+        /* --- CSS Container dùng chung --- */
+        .info-container { background: var(--soft-red); padding: 50px; border-radius: 35px; margin-bottom: 50px; }
+        .placeholder-box { background: #eee; border: 2px dashed #ccc; color: #999; display: flex; align-items: center; justify-content: center; border-radius: 10px; margin-bottom: 20px; font-weight: 600; }
+
+        /* --- Form CSS --- */
+        .form-input {
+            padding: 10px 15px; border: 1.5px solid white; border-radius: 12px; 
+            outline: none; font-size: 0.95rem; transition: 0.3s;
+            font-family: 'Plus Jakarta Sans', sans-serif; background: white; resize: vertical; width: 100%;
+        }
+        .form-input:focus { border-color: var(--primary-red); box-shadow: 0 0 0 3px rgba(211,47,47,0.1); }
+        .btn-submit {
+            background: var(--primary-red); color: white; padding: 14px; width: 100%;
+            border: none; border-radius: 12px; font-weight: 800; font-size: 1.05rem;
+            cursor: pointer; transition: var(--transition); box-shadow: 0 5px 15px rgba(211,47,47,0.3);
+        }
+        .btn-submit:hover { background: var(--accent-red); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(211,47,47,0.4); }
+        
+        .success-popup {
+            display: none; background: #d4edda; color: #155724; padding: 12px;
+            border-radius: 12px; margin-top: 10px; text-align: center; font-weight: 600;
+            border: 1px solid #c3e6cb; animation: slideIn 0.3s ease; font-size: 0.95rem;
+        }
+
+        /* --- Profile Card CSS --- */
+        .profile-card {
+            background: var(--soft-red); border-radius: 25px; padding: 25px;
+            display: flex; flex-direction: column; gap: 15px; border: 1px solid rgba(211,47,47,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: var(--transition);
+        }
+        .profile-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(211,47,47,0.15); }
+        .profile-card-inner { display: flex; gap: 20px; width: 100%; }
+        
+        .profile-card-img {
+            width: 100px; height: 130px; background: white; border-radius: 15px;
+            flex-shrink: 0; overflow: hidden; border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .profile-card-img img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-card-info { flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 0.9rem; }
+        .profile-card-info h3 { color: var(--primary-red); font-size: 1.2rem; margin-bottom: 3px; }
+        .profile-card-info p { margin: 0; color: #444; }
+        .profile-card-info strong { color: var(--text-dark); }
+
+        .profile-actions { display: flex; gap: 10px; width: 100%; border-top: 1px dashed rgba(211,47,47,0.2); padding-top: 15px; }
+        .btn-reject { flex: 1; padding: 12px; background: #fff; color: #666; border: 1px solid #ccc; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn-reject:hover { background: #e0e0e0; }
+        .btn-accept { flex: 1; padding: 12px; background: var(--primary-red); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(211,47,47,0.3); }
+        .btn-accept:hover { background: var(--accent-red); transform: translateY(-2px); }
+
+        /* --- Toast Popup Chung --- */
+        #global-toast {
+            display: none; position: fixed; top: 100px; left: 50%; transform: translateX(-50%);
+            background: #d4edda; color: #155724; padding: 15px 30px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 9999; font-weight: 700; text-align: center; border: 1px solid #c3e6cb;
+        }
+
+        /* --- Contact & Maps --- */
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; background: var(--soft-red); padding: 50px; border-radius: 35px; }
+        .contact-info h2 { color: var(--primary-red); margin-bottom: 20px; font-size: 2rem; }
+        .member-list { list-style: none; margin: 25px 0; }
+        .member-list li { padding: 12px 0; border-bottom: 1px solid rgba(211, 47, 47, 0.1); font-weight: 600; font-size: 1.1rem; }
+        .map-box { border-radius: 20px; overflow: hidden; border: 8px solid white; box-shadow: var(--shadow); height: 400px; }
+
+        /* =========================================
+           CHATBOT & GPA CSS
+           ========================================= */
+        #chat-trigger, #gpa-trigger {
+            position: fixed; bottom: 30px; width: 65px; height: 65px; background: var(--primary-red);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 10px 25px rgba(211, 47, 47, 0.4); z-index: 1001; transition: var(--transition);
+        }
+        #chat-trigger { right: 30px; } #gpa-trigger { left: 30px; }
+        #chat-trigger:hover { transform: scale(1.1) rotate(5deg); } #gpa-trigger:hover { transform: scale(1.1) rotate(-5deg); }
+
+        .widget-window {
+            position: fixed; bottom: 105px; width: 360px; background: white;
+            border-radius: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); display: none;
+            flex-direction: column; overflow: hidden; z-index: 1001; animation: slideIn 0.4s ease;
+        }
+        #chat-window { right: 30px; height: 520px; }
+        #gpa-window { left: 30px; max-height: 550px; }
+
+        .widget-header { color: white; padding: 20px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+        .chat-header { background: var(--primary-red); } .gpa-header { background: #2D3436; }
+        
+        .chat-body { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #fdfdfd; }
+        .msg { padding: 12px 18px; border-radius: 20px; font-size: 0.95rem; max-width: 85%; line-height: 1.4; }
+        .msg.bot { background: var(--soft-red); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--primary-red); }
+        .msg.user { background: var(--primary-red); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        .chat-input { padding: 15px; display: flex; gap: 10px; border-top: 1px solid #eee; background: white; }
+        .chat-input input { flex: 1; border: 1.5px solid #eee; padding: 12px 20px; border-radius: 30px; outline: none; transition: 0.3s; }
+        .chat-input input:focus { border: 1.5px solid var(--primary-red); }
+
+        .gpa-tabs { display: flex; border-bottom: 1px solid #eee; background: #fafafa;}
+        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-weight: 800; color: #999; cursor: pointer; transition: 0.3s; font-size: 0.9rem;}
+        .tab-btn.active { color: var(--primary-red); border-bottom: 3px solid var(--primary-red); background: white;}
+        .gpa-body { padding: 20px; overflow-y: auto; background: #fdfdfd; display: flex; flex-direction: column; gap: 15px; max-height: 350px; }
+        .subject-row { display: flex; gap: 10px; align-items: center; animation: fadeInUp 0.3s ease; }
+        .subject-row input { width: 80px; padding: 10px; border: 1.5px solid #eee; border-radius: 10px; outline: none; text-align: center; font-weight: 600;}
+        .subject-row select { flex: 1; padding: 10px; border: 1.5px solid #eee; border-radius: 10px; outline: none; font-weight: 600;}
+        .subject-row .btn-remove { background: var(--soft-red); color: var(--primary-red); border: none; width: 35px; height: 35px; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.2s;}
+        .subject-row .btn-remove:hover { background: var(--primary-red); color: white; }
+        .target-input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+        .target-input-group label { font-size: 0.9rem; font-weight: 600; color: #555; }
+        .target-input-group input { padding: 12px; border: 1.5px solid #eee; border-radius: 10px; outline: none; font-weight: 600; width: 100%;}
+        .target-input-group input:focus { border: 1.5px solid var(--primary-red); }
+        .gpa-actions { display: flex; flex-direction: column; gap: 10px; padding: 0 20px 20px 20px; background: #fdfdfd; border-top: 1px solid transparent;}
+        .btn-add-subject { background: #f0f0f0; color: #333; border: none; padding: 12px; border-radius: 15px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .btn-add-subject:hover { background: #e0e0e0; }
+        .btn-calc-gpa { background: var(--primary-red); color: white; border: none; padding: 15px; border-radius: 15px; cursor: pointer; font-weight: 800; font-size: 1.1rem; transition: 0.2s; box-shadow: 0 5px 15px rgba(211,47,47,0.3); width: 100%;}
+        .btn-calc-gpa:hover { background: var(--accent-red); transform: translateY(-2px); }
+        .gpa-result-box { text-align: center; padding: 15px; background: var(--soft-red); border-radius: 15px; border: 2px dashed var(--primary-red); margin-bottom: 10px; display: none; }
+        .gpa-result-box span { display: block; font-size: 2rem; font-weight: 800; color: var(--primary-red); }
+
+        /* =========================================
+           CSS THÊM CHO PHẦN HỌC BỔNG (LỘC)
+           ========================================= */
+        .scholar-app { background: white; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); border: 1px solid rgba(211,47,47,0.1); }
+        .scholar-search { background: var(--soft-red); padding: 35px 30px; text-align: center; border-bottom: 1px solid rgba(211,47,47,0.1); }
+        .scholar-search h3 { font-size: 1.6rem; color: var(--text-dark); margin-bottom: 25px; font-weight: 800; }
+        .scholar-filters { display: flex; justify-content: center; gap: 20px; align-items: flex-end; flex-wrap: wrap; }
+        .s-filter-item { display: flex; flex-direction: column; text-align: left; position: relative; }
+        .s-filter-item label { font-size: 0.85rem; color: #666; margin-bottom: 8px; font-weight: 700; }
+        .s-select { padding: 12px 18px; border: 1.5px solid #e0e0e0; border-radius: 12px; background: white; min-width: 200px; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 600; color: var(--text-dark); cursor: pointer; transition: 0.3s; }
+        .s-select:hover { border-color: var(--primary-red); }
+        .s-dropdown { display: none; position: absolute; top: 75px; left: 0; width: 100%; background: white; border: 1.5px solid var(--primary-red); border-radius: 12px; box-shadow: 0 10px 25px rgba(211,47,47,0.15); z-index: 10; overflow: hidden; list-style: none; }
+        .s-dropdown.active { display: block; animation: fadeInUp 0.2s ease; }
+        .s-dropdown li { padding: 12px 18px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: 0.2s; border-bottom: 1px solid #f5f5f5; }
+        .s-dropdown li:hover { background: var(--soft-red); color: var(--primary-red); }
+        .s-status-btns { display: flex; gap: 10px; height: 46px; }
+        .s-btn-status { padding: 0 20px; border: 1.5px solid #e0e0e0; border-radius: 25px; font-size: 0.9rem; font-weight: 700; cursor: pointer; background: white; color: #666; transition: 0.3s; }
+        .s-btn-status.active { background: var(--primary-red); color: white; border-color: var(--primary-red); box-shadow: 0 4px 10px rgba(211,47,47,0.2); }
+        .scholar-content { padding: 30px 40px; }
+        .s-category-wrapper { margin-bottom: 40px; scroll-margin-top: 100px; }
+        .s-category-header { display: flex; align-items: center; gap: 15px; border-bottom: 2.5px solid var(--soft-red); padding-bottom: 15px; margin-bottom: 25px; }
+        .s-category-icon { width: 45px; height: 45px; background: var(--soft-red); color: var(--primary-red); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .s-category-title { font-size: 1.4rem; font-weight: 800; color: var(--primary-red); text-transform: uppercase; }
+        .s-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .scholar-card { border: 1px solid #eee; border-radius: 15px; padding: 25px; background: white; display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: var(--transition); text-align: left;}
+        .scholar-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(211,47,47,0.1); border-color: rgba(211,47,47,0.3); }
+        .s-badge { position: absolute; top: 20px; right: 20px; padding: 5px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+        .s-badge.green { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .s-badge.yellow { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .s-badge.gray { background: #e2e3e5; color: #383d41; border: 1px solid #d6d8db; }
+        .scholar-card h4 { font-size: 1.15rem; margin-bottom: 15px; color: var(--text-dark); line-height: 1.4; min-height: 50px; font-weight: 800; padding-right: 70px; }
+        .s-card-details { list-style: none; margin-bottom: 25px; flex-grow: 1; padding: 0; }
+        .s-card-details li { font-size: 0.9rem; color: #555; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; font-weight: 500; }
+        .s-card-details li i { color: var(--primary-red); opacity: 0.7; margin-top: 4px; min-width: 16px; text-align: center; }
+        .s-card-details li strong { color: var(--text-dark); }
+        .btn-s-view { width: 100%; background-color: var(--soft-red); color: var(--primary-red); border: none; padding: 14px; border-radius: 12px; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 8px; text-decoration: none; }
+        .btn-s-view:hover { background-color: var(--primary-red); color: white; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(211,47,47,0.2); }
+
+        /* Animations */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        @media (max-width: 992px) { .header-center { display: none; } }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .contact-container { grid-template-columns: 1fr; }
+            nav { display: none; }
+            .profile-card-inner { flex-direction: column; align-items: center; text-align: center; }
+            .profile-card-img { width: 120px; height: 150px; margin-bottom: 5px;}
+            .section-title { font-size: 2rem; }
+            .scholar-filters { flex-direction: column; align-items: stretch; }
+            .s-select { width: 100%; }
+            .s-status-btns { justify-content: center; }
+            .scholar-content { padding: 20px; }
+            .scholar-card h4 { padding-right: 0; margin-top: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="global-toast">
+        🎉 Chờ chúng mình mang 'Phúc' đến nha!
+    </div>
+
+    <header>
+        <a href="#" class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNLG2poUhW72ORKbqy3xmyk7q3Q4HAtfcVpw&s" alt="Logo USSH">
+            <span class="logo-text">USSH - PHÚC LỘC THỌ</span>
+        </a>
+        <div class="header-center">
+            <a href="#phuc" title="Chuyển đến Phúc"><img src="https://drive.google.com/thumbnail?id=1Cv-g5oE3VfmFxXg6KgN5uykJDU2Lzfbt&sz=w150" alt="Logo Phúc"></a>
+            <a href="#loc" title="Chuyển đến Lộc"><img src="https://drive.google.com/thumbnail?id=1lIzml0jGhHDmLAZJ0TG8RviZ9uaX59qV&sz=w150" alt="Logo Lộc"></a>
+            <a href="#tho" title="Chuyển đến Thọ"><img src="https://drive.google.com/thumbnail?id=1gq8zKmGK0nZIShuBVcVn_Qp6EYm3LCxH&sz=w150" alt="Logo Thọ"></a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#trang-chu">Trang chủ</a></li>
+                <li><a href="#phuc">Phúc</a></li>
+                <li><a href="#loc">Lộc</a></li>
+                <li><a href="#tho">Thọ</a></li>
+                <li><a href="#lien-he">Liên hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="trang-chu" class="hero">
+        <img src="https://drive.google.com/thumbnail?id=1jw4tcetWYg2pnfOYUxlpvWwYNT4H3tFe&sz=w1920"   
+             alt="Background"
+             style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: brightness(0.6);">
+        <div class="hero-content">
+            <h1>Phúc Lộc Thọ – Điểm tựa số cho<br>sinh viên Nhân Văn</h1>
+            <a href="#huong-dan" class="btn-cta">TÌM HIỂU THÊM</a>
+        </div>
+    </section>
+
+    <section id="huong-dan">
+        <div class="info-container">
+            <h2 style="color: var(--primary-red); margin-bottom: 20px; font-size: 2.5rem; font-weight: 800; text-align: center;">Bí kíp trải chiếu</h2>
+            <div style="margin-bottom: 20px; color: var(--text-dark);">
+                <p>[Chỗ này sinh viên sẽ dẫn nội dung Bí kíp trải chiếu. Tớ đang để khung sẵn ở đây theo yêu cầu.]</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            <div class="placeholder-box" style="height: 400px; width: 100%;">
+                [Hình ảnh bí kíp minh họa đặt ở đây]
+            </div>
+        </div>
+    </section>
+
+    <section id="phuc" style="padding: 0; padding-bottom: 80px;">
+        <div style="position: relative; width: 100%; height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; overflow: hidden;">
+            <img src="https://drive.google.com/thumbnail?id=1v3_J21ZTGYeNVYXqcKZKruKDnnuAbGKj&sz=w1920"
+                 alt="Phúc Background"
+                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: brightness(0.5);">
+
+            <div style="z-index: 1; padding: 0 10%; animation: fadeInUp 1s ease; max-width: 1000px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h1 style="font-size: clamp(1.5rem, 3vw, 3rem); font-weight: 800; margin-bottom: 20px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-style: italic; white-space: nowrap; margin-left: 0; padding-left: 0; text-align: center;">Phúc - Gieo chân thành, hái duyên lành</h1>
+                <p style="font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 2px 5px rgba(0,0,0,0.3); line-height: 1.6;">
+                    Tại Nhân Văn, mỗi cuộc gặp gỡ đều là một hạt mầm. Chúng mình tin rằng, khi bạn mở lòng bằng sự chân thành nhất của một người, đó là lúc bạn đang gieo xuống một hạt giống "Hạnh Phúc". Hãy để chặng đường này giúp bạn chăm sóc những rung động đầu tiên, để gặt hái một mối duyên lành xứng đáng.
+                </p>
+            </div>
+        </div>
+
+        <div style="padding: 60px 10% 0 10%;">
+            <div class="info-container" style="display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 0;">
+                
+                <div style="flex: 1; min-width: 250px; background: #eee; border: 2px dashed #ccc; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; aspect-ratio: 9/16;">
+                    <iframe src="https://drive.google.com/file/d/1eaeWNlvG0Enof96SJLTde7EPnTGMz086/preview" width="100%" height="100%" style="border:none; position:absolute; top:0; left:0; border-radius: 18px;" allow="autoplay"></iframe>
+                </div>
+                
+                <div style="flex: 2; min-width: 300px; display: flex; flex-direction: column; justify-content: center;">
+                    <h2 style="color: var(--primary-red); margin-bottom: 20px; font-size: 2rem;">Đăng ký tìm "Mảnh ghép"</h2>
+                    
+                    <form id="match-form" style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 10px;">
+                                <input type="text" placeholder="Họ tên" class="form-input" required>
+                                <input type="text" placeholder="Ngày sinh (VD: 01/01/2004)" class="form-input" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+                                <input type="text" placeholder="Khóa & Ngành đang học" class="form-input" required>
+                            </div>
+
+                            <div style="flex: 1; min-width: 200px; border: 2.5px dashed var(--primary-red); border-radius: 12px; background: rgba(255,255,255,0.6); display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; transition: 0.3s;" 
+                                 onclick="document.getElementById('upload-img').click()" 
+                                 onmouseover="this.style.background='white'" 
+                                 onmouseout="this.style.background='rgba(255,255,255,0.6)'">
+                                
+                                <div id="upload-content" style="text-align: center; color: var(--primary-red);">
+                                    <span style="font-size: 2.5rem; display: block; margin-bottom: 5px;">📷</span>
+                                    <span style="font-weight: 700; font-size: 1rem;">Thêm hình ảnh của bạn</span>
+                                </div>
+                                <img id="preview-img" style="position: absolute; width: 100%; height: 100%; object-fit: cover; display: none;" alt="Preview">
+                                <input type="file" id="upload-img" style="display: none;" accept="image/*" onchange="previewImage(event)">
+                            </div>
+                        </div>
+
+                        <textarea placeholder="Sở thích của bạn là gì?" rows="1" class="form-input"></textarea>
+                        <textarea placeholder="Mong muốn đối phương là người thế nào?" rows="1" class="form-input"></textarea>
+                        <textarea placeholder="Tâm tình (Vài dòng chia sẻ thêm về bản thân)..." rows="2" class="form-input"></textarea>
+                        <textarea placeholder="Ghi chú thêm (nếu có)" rows="1" class="form-input"></textarea>
+                        
+                        <button type="button" class="btn-submit" style="margin-top: 5px;" onclick="submitMatchForm()">Gửi tiếng gọi nửa kia của mình</button>
+                        
+                        <div id="success-msg" class="success-popup">
+                            🎉 Đã gửi thông tin thành công! Chúng mình sẽ mang 'Phúc' đến sớm thôi!
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="manh-tinh" style="background: white; padding-top: 20px;">
+        <h2 class="section-title">Những mảnh tình chưa ghép</h2>
+        
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            
+            <div class="profile-card" id="profile-1">
+                <div class="profile-card-inner">
+                    <div class="profile-card-img">
+                        <img src="https://drive.google.com/thumbnail?id=1NCNIJsaeqjmM9867MJ7AtEVE7jM59JEt&sz=w500" alt="Nguyễn Mạnh Cường">
+                    </div>
+                    <div class="profile-card-info">
+                        <h3>Nguyễn Mạnh Cường</h3>
+                        <p><strong>🎂 Ngày sinh:</strong> 21/12/2006</p>
+                        <p><strong>🎓 Khóa & Ngành:</strong> K69 Báo chí</p>
+                        <p><strong>❤️ Sở thích:</strong> Chơi game</p>
+                        <p><strong>✨ Tìm kiếm:</strong> Không thực sự tìm kiếm gì, chỉ mong duyên sẽ tới</p>
+                        <p><strong>💭 Tâm tình:</strong> Mình chưa thực sự yêu ai bao giờ nên mong cậu sẽ là người đó ^^</p>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn-reject" onclick="rejectProfile('profile-1')">Hỏng thích</button>
+                    <button class="btn-accept" onclick="acceptProfile()">Ưng rùi nè</button>
+                </div>
+            </div>
+
+            <div class="profile-card" id="profile-2">
+                <div class="profile-card-inner">
+                    <div class="profile-card-img">
+                        <img src="https://drive.google.com/thumbnail?id=1FiJDaryoEkHNqHUDGHo74mP-zjQsmrqX&sz=w500" alt="Trịnh Tùng Lâm">
+                    </div>
+                    <div class="profile-card-info">
+                        <h3>Trịnh Tùng Lâm</h3>
+                        <p><strong>🎂 Ngày sinh:</strong> 19/10/2006</p>
+                        <p><strong>🎓 Khóa & Ngành:</strong> K69 Báo chí</p>
+                        <p><strong>❤️ Sở thích:</strong> Đọc truyện tranh, chơi điện tử</p>
+                        <p><strong>✨ Tìm kiếm:</strong> Bạn nữ trầm tính, nhẹ nhàng</p>
+                        <p><strong>💭 Tâm tình:</strong> Hy vọng sẽ được yên bình bên cậu <3</p>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn-reject" onclick="rejectProfile('profile-2')">Hỏng thích</button>
+                    <button class="btn-accept" onclick="acceptProfile()">Ưng rùi nè</button>
+                </div>
+            </div>
+
+            <div class="profile-card" id="profile-3">
+                <div class="profile-card-inner">
+                    <div class="profile-card-img">
+                        <img src="https://drive.google.com/thumbnail?id=14flDSP3RAPT0bz4L1hfIrGdYlKROKBX6&sz=w500" alt="Phạm Đình Tú">
+                    </div>
+                    <div class="profile-card-info">
+                        <h3>Phạm Đình Tú</h3>
+                        <p><strong>🎂 Ngày sinh:</strong> 03/09/2006</p>
+                        <p><strong>🎓 Khóa & Ngành:</strong> K69 Báo chí</p>
+                        <p><strong>❤️ Sở thích:</strong> Chơi game, xem phim</p>
+                        <p><strong>✨ Tìm kiếm:</strong> Một bạn người iu siêu cute ><</p>
+                        <p><strong>💭 Tâm tình:</strong> “anhdoiemnoitancungthoigian”</p>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn-reject" onclick="rejectProfile('profile-3')">Hỏng thích</button>
+                    <button class="btn-accept" onclick="acceptProfile()">Ưng rùi nè</button>
+                </div>
+            </div>
+            
+        </div>
+        
+        <p style="text-align: center; font-style: italic; margin-top: 40px; color: #666; font-weight: 600;">Sẽ cập nhật sau</p>
+
+    </section>
+
+    <section id="loc" style="padding: 0; padding-bottom: 80px; background: var(--soft-red);">
+        <div style="position: relative; width: 100%; height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; overflow: hidden;">
+            <img src="https://drive.google.com/thumbnail?id=17Q46Bn8MvoHK6mzi0_VdkeXqwTVmiOsU&sz=w1920"
+                 alt="Lộc Background"
+                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: brightness(0.5);">
+
+            <div style="z-index: 1; padding: 0 10%; animation: fadeInUp 1s ease; max-width: 1000px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h1 style="font-size: clamp(1.5rem, 3vw, 3rem); font-weight: 800; margin-bottom: 20px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-style: italic; white-space: nowrap; margin-left: 0; padding-left: 0; text-align: center;">Lộc - Nâng cánh ước mơ, tự do khai phóng</h1>
+                <p style="font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 2px 5px rgba(0,0,0,0.3); line-height: 1.6;">
+                    Có những ước mơ cần một điểm tựa để cất cánh. "Lộc" chính là điểm tựa ấy, giúp bạn bớt đi một phần lo toan để thêm mười phần tập trung cho đam mê nghiên cứu và sáng tạo. Hãy để sự hỗ trợ này trở thành cơn gió dưới đôi cánh của bạn.
+                </p>
+            </div>
+        </div>
+
+        <div style="padding: 60px 10% 0 10%;">
+            <h2 class="section-title" style="margin-bottom: 40px;">Tài lộc trời cho</h2>
+            
+            <div class="scholar-app">
+                <div class="scholar-search">
+                    <div class="scholar-filters">
+                        <div class="s-filter-item">
+                            <label>Năm học</label>
+                            <div class="s-select">2024-2025 <i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        
+                        <div class="s-filter-item" id="loai-hb-container">
+                            <label>Loại Học Bổng</label>
+                            <div class="s-select" onclick="toggleScholarDropdown()">Tất cả <i class="fas fa-chevron-down"></i></div>
+                            <ul class="s-dropdown" id="loai-hoc-bong-dropdown">
+                                <li onclick="scrollToCategory('scholarships-container', 'Tất cả')">Tất cả</li>
+                                <li onclick="scrollToCategory('hb-ngan-sach', 'Ngân sách Nhà nước')">Ngân sách Nhà nước</li>
+                                <li onclick="scrollToCategory('hb-ngoai-ngan-sach', 'Ngoài ngân sách')">Ngoài ngân sách</li>
+                                <li onclick="scrollToCategory('hb-trao-doi', 'Trao đổi quốc tế')">Trao đổi quốc tế</li>
+                            </ul>
+                        </div>
+
+                        <div class="s-filter-item">
+                            <label>Trạng thái</label>
+                            <div class="s-status-btns">
+                                <button class="s-btn-status active" onclick="filterScholarships('all', this)">Tất cả</button>
+                                <button class="s-btn-status" onclick="filterScholarships('dang-mo', this)">Đang mở</button>
+                                <button class="s-btn-status" onclick="filterScholarships('sap-mo', this)">Sắp mở</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scholar-content" id="scholarships-container">
+                    
+                    <div class="s-category-wrapper" id="hb-ngan-sach">
+                        <div class="s-category-header">
+                            <div class="s-category-icon"><i class="fas fa-landmark"></i></div>
+                            <div class="s-category-title">I. Học bổng Ngân sách Nhà nước</div>
+                        </div>
+                        <div class="s-cards-grid">
+                            
+                            <div class="scholar-card" data-status="dang-mo">
+                                <span class="s-badge green">Đang mở</span>
+                                <h4>Học bổng khuyến khích học tập (HBKKHT)</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV hệ chính quy, học lực từ Khá trở lên + ĐRL đạt yêu cầu.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> ~0.8 – 1.2 lần học phí/tháng.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Xét mỗi học kỳ (HK1: T10-11, HK2: T3-4).</span></li>
+                                </ul>
+                                <a href="https://fts.ussh.vnu.edu.vn/vi/news/?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="scholar-card" data-status="sap-mo">
+                                <span class="s-badge yellow">Sắp mở</span>
+                                <h4>Học bổng thu hút tài năng (KHCB)</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV các ngành KHCB, thành tích tốt, có định hướng NC.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> ~ 20.000.000 VNĐ/năm.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Xét đầu năm học (Tháng 8–9).</span></li>
+                                </ul>
+                                <a href="https://his.ussh.vnu.edu.vn/vi/news/thong-bao/sinh-vien-09-nganh-khcb-cua-vnu-ussh-tiep-tuc-duoc-nhan-hoc-bong-thu-hut-tai-nang-5947.html?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="s-category-wrapper" id="hb-ngoai-ngan-sach">
+                        <div class="s-category-header">
+                            <div class="s-category-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                            <div class="s-category-title">II. Học bổng Ngoài ngân sách</div>
+                        </div>
+                        <div class="s-cards-grid">
+                            
+                            <div class="scholar-card" data-status="sap-mo">
+                                <span class="s-badge yellow">Sắp mở</span>
+                                <h4>Học bổng Mitsubishi (Nhật Bản)</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV năm 3–4, GPA giỏi, ĐRL tốt. Không nhận HB khác cùng thời điểm.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> ~ 340 USD/suất/năm.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Thường vào Tháng 9–10.</span></li>
+                                </ul>
+                                <a href="https://ussh.vnu.edu.vn/vi/news/thong-bao/thong-bao-chuong-trinh-hoc-bong-mitsubishi-nhat-ban-nam-hoc-2024-2025-22869.html?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="scholar-card" data-status="sap-mo">
+                                <span class="s-badge yellow">Sắp mở</span>
+                                <h4>Học bổng Pony Chung (Hàn Quốc)</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV năm 3–4, thành tích xuất sắc, có đóng góp xã hội.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> ~ 600 USD/năm. Có cơ hội trao đổi HQ.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Tháng 8–9 hằng năm.</span></li>
+                                </ul>
+                                <a href="https://fts.ussh.vnu.edu.vn/vi/news/?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="scholar-card" data-status="sap-mo">
+                                <span class="s-badge yellow">Sắp mở</span>
+                                <h4>Học bổng Shinhan</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV có hoàn cảnh khó khăn, học lực Khá trở lên.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> ~ 5–8 triệu VNĐ.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Thường vào Tháng 10–11.</span></li>
+                                </ul>
+                                <a href="https://fts.ussh.vnu.edu.vn/vi/news/?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="scholar-card" data-status="sap-mo">
+                                <span class="s-badge yellow">Sắp mở</span>
+                                <h4>Học bổng Lawrence S. Ting</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV khó khăn, học khá–giỏi, ý chí vươn lên.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> ~ 10–15 triệu VNĐ.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Tháng 8–9.</span></li>
+                                </ul>
+                                <a href="https://fts.ussh.vnu.edu.vn/vi/news/?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="scholar-card" data-status="dang-mo">
+                                <span class="s-badge green">Đang mở</span>
+                                <h4>Học bổng Vingroup – ĐHQGHN</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV xuất sắc hoặc đã nhận HB năm trước.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> ~ 20–30 triệu VNĐ/năm.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Tháng 2–3.</span></li>
+                                </ul>
+                                <a href="https://ussh.vnu.edu.vn/vi/news/thong-bao/thong-bao-chuong-trinh-hoc-bong-dong-hanh-vingroup-dhqghn-nam-hoc-2024-2025-cho-sinh-vien-vnu-ussh-23168.html?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="scholar-card" data-status="dang-mo">
+                                <span class="s-badge green">Đang mở</span>
+                                <h4>Học bổng SHB</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV xuất sắc toàn trường.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> Tổng quỹ ~125 triệu cho nhiều suất.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Thường vào Tháng 3–4.</span></li>
+                                </ul>
+                                <a href="https://ussh.io.vn/vi/news/dao-tao/17-sinh-vien-tieu-bieu-cua-vnu-ussh-nhan-hoc-bong-shb-nam-hoc-2024-2025-23279.html?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="scholar-card" data-status="dang-mo">
+                                <span class="s-badge gray">Biến động</span>
+                                <h4>Các học bổng khác</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> Phụ thuộc quỹ DN, cựu SV, ngành học.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> 3–10 triệu VNĐ.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Rải rác trong năm.</span></li>
+                                </ul>
+                                <button class="btn-s-view" style="background: #e2e3e5; color: #555; cursor: default;">CẬP NHẬT TRÊN FANPAGE</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="s-category-wrapper" id="hb-trao-doi">
+                        <div class="s-category-header">
+                            <div class="s-category-icon"><i class="fas fa-globe-asia"></i></div>
+                            <div class="s-category-title">III. Học bổng Trao đổi Quốc tế</div>
+                        </div>
+                        <div class="s-cards-grid">
+                            
+                            <div class="scholar-card" data-status="dang-mo">
+                                <span class="s-badge green">Đang mở</span>
+                                <h4>Trao đổi SV ĐHQGHN (AUN/UMAP/SATU)</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> GPA ≥ 3.0/4, IELTS ≥ 6.0.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> Miễn học phí, có thể hỗ trợ sinh hoạt.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Fall (T3–4) | Spring (T9–10).</span></li>
+                                </ul>
+                                <a href="https://ussh.io.vn/vi/news/dao-tao/17-sinh-vien-tieu-bieu-cua-vnu-ussh-nhan-hoc-bong-shb-nam-hoc-2024-2025-23279.html?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="scholar-card" data-status="sap-mo">
+                                <span class="s-badge yellow">Sắp mở</span>
+                                <h4>Trao đổi qua học bổng Pony Chung</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV đã đạt học bổng Pony Chung.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> Tài trợ học tập tại Hàn Quốc.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Nối tiếp sau khi nhận HB (Cuối năm).</span></li>
+                                </ul>
+                                <a href="https://fts.ussh.vnu.edu.vn/vi/news/?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="scholar-card" data-status="sap-mo">
+                                <span class="s-badge yellow">Sắp mở</span>
+                                <h4>Học bổng Chính phủ (MEXT, GKS, Erasmus+)</h4>
+                                <ul class="s-card-details">
+                                    <li><i class="fas fa-user-check"></i> <span><strong>Đối tượng:</strong> SV năm cuối/mới TN. Hồ sơ xuất sắc + Ngoại ngữ tốt.</span></li>
+                                    <li><i class="fas fa-money-bill-wave"></i> <span><strong>Giá trị:</strong> Toàn phần / Bán phần.</span></li>
+                                    <li><i class="far fa-calendar-alt"></i> <span><strong>Thời hạn:</strong> Tùy chương trình (Tháng 9 → Tháng 3).</span></li>
+                                </ul>
+                                <a href="https://fts.ussh.vnu.edu.vn/vi/news/?utm_source=chatgpt.com" target="_blank" class="btn-s-view">XEM CHI TIẾT <i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tho" style="padding: 0; padding-bottom: 80px; background: white;">
+        <div style="position: relative; width: 100%; height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; overflow: hidden;">
+            <img src="https://drive.google.com/thumbnail?id=1v3_J21ZTGYeNVYXqcKZKruKDnnuAbGKj&sz=w1920"
+                 alt="Thọ Background Placeholder"
+                 style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: brightness(0.5);">
+
+            <div style="z-index: 1; padding: 0 10%; animation: fadeInUp 1s ease; max-width: 1000px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <h1 style="font-size: clamp(1.5rem, 3vw, 3rem); font-weight: 800; margin-bottom: 20px; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-style: italic; white-space: nowrap; margin-left: 0; padding-left: 0; text-align: center;">Thọ - gì đó Tú nghĩ sau</h1>
+                <p style="font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 2px 5px rgba(0,0,0,0.3); line-height: 1.6;">
+                    Tối nay Tú sẽ nghĩ
+                </p>
+            </div>
+        </div>
+
+        <div style="padding: 60px 10% 0 10%;">
+            <h2 class="section-title" style="margin-bottom: 40px;">Giá trị "Thọ"</h2>
+            <div class="grid">
+                <div class="card" style="background: var(--soft-red); border: 1px solid white;">
+                    <span class="icon">🏛️</span>
+                    <h3>Di Sản Trường Tồn</h3>
+                    <p>Kế thừa nền tảng của Đại học Văn khoa, USSH tự hào với bề dày lịch sử hơn 75 năm phát triển rực rỡ.</p>
+                </div>
+                <div class="card" style="background: var(--soft-red); border: 1px solid white;">
+                    <span class="icon">🌳</span>
+                    <h3>Giá Trị Bền Vững</h3>
+                    <p>Kiến thức khoa học xã hội là nền tảng vững chắc nhất để con người phát triển bền bỉ trong kỷ nguyên số.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="lien-he">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Thông tin nhóm</h2>
+                <p><strong>Dự án:</strong> Phúc Lộc Thọ</p>
+                <p><strong>Học phần:</strong> Công nghệ truyền thông số</p>
+                <p><strong>Mã lớp học phần:</strong> JOU3087 24.BC.B 1</p>
+                <p><strong>Giảng viên:</strong> TS. Nguyễn Đình Hậu</p>
+                <ul class="member-list">
+                    <li>👤 17. Âu Khánh Ngân <i>(24030105)</i></li>
+                    <li>👤 26. Nguyễn Tuyết Nhung <i>(24030120)</i></li>
+                    <li>👤 42. Phạm Đình Tú <i>(24030171)</i></li>
+                </ul>
+                <p>📍 Địa chỉ: 336 Nguyễn Trãi, Thanh Xuân, Hà Nội</p>
+                <p>📧 Email: contact@ussh.edu.vn</p>
+            </div>
+            <div class="map-box">
+                <iframe src="https://maps.google.com/maps?q=Trường%20Đại%20học%20Khoa%20học%20Xã%20hội%20và%20Nhân%20văn%20-%20ĐHQGHN,%20336%20Nguyễn%20Trãi&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background-color: #1a1a1a; color: white; padding: 60px 10% 40px; text-align: center;">
+        <h3 style="color: white; margin-bottom: 15px;">TRƯỜNG ĐẠI HỌC KHOA HỌC XÃ HỘI VÀ NHÂN VĂN, ĐHQGHN</h3>
+        <p style="opacity: 0.7; font-size: 0.9rem; margin-top: 10px; margin-bottom: 5px; color: white;">Địa chỉ: 336 Nguyễn Trãi, Thanh Xuân, Hà Nội</p>
+        <p style="opacity: 0.7; font-size: 0.9rem; margin-top: 10px; color: white;">©2026 Nhóm Phúc Lộc Thọ. Thực hiện bởi nhóm sinh viên lớp Công nghệ truyền thông số (2026.01 CNTTS T3).</p>
+    </footer>
+    
+    <div id="gpa-window" class="widget-window">
+        <div class="widget-header gpa-header">
+            <span>📊 Bảng Tính GPA</span>
+            <span style="cursor:pointer" onclick="toggleGPA()">✕</span>
+        </div>
+        <div class="gpa-tabs">
+            <button class="tab-btn active" id="btn-tab-calc" onclick="switchTab('calc')">TÍNH KỲ NÀY</button>
+            <button class="tab-btn" id="btn-tab-target" onclick="switchTab('target')">MỤC TIÊU</button>
+        </div>
+        <div id="tab-calc" style="display: block;">
+            <div class="gpa-body" id="subject-list">
+                <div class="gpa-result-box" id="gpa-result-box">Điểm GPA: <span id="final-gpa">0.00</span></div>
+                <div class="subject-row">
+                    <input type="number" class="credit-input" placeholder="TC" min="1">
+                    <select class="grade-input">
+                        <option value="" disabled selected>Chọn</option>
+                        <option value="4.0">A+ (4.0)</option>
+                        <option value="3.7">A (3.7)</option>
+                        <option value="3.5">B+ (3.5)</option>
+                        <option value="3.0">B (3.0)</option>
+                        <option value="2.5">C+ (2.5)</option>
+                        <option value="2.0">C (2.0)</option>
+                        <option value="1.5">D+ (1.5)</option>
+                        <option value="1.0">D (1.0)</option>
+                        <option value="0.0">F (0.0)</option>
+                    </select>
+                    <button class="btn-remove" onclick="removeSubject(this)">✕</button>
+                </div>
+            </div>
+            <div class="gpa-actions">
+                <button class="btn-add-subject" onclick="addSubject()">+ Thêm môn</button>
+                <button class="btn-calc-gpa" onclick="calculateGPA()">TÍNH</button>
+            </div>
+        </div>
+        <div id="tab-target" style="display: none;">
+            <div class="gpa-body">
+                <div class="gpa-result-box" id="target-result-box"></div>
+                <div class="target-input-group"><label>GPA hiện tại (VD: 3.2)</label><input type="number" id="target-g0" step="0.01"></div>
+                <div class="target-input-group"><label>Tổng tín chỉ ĐÃ học (VD: 90)</label><input type="number" id="target-t0"></div>
+                <div class="target-input-group"><label>Tổng tín chỉ CÒN LẠI (VD: 30)</label><input type="number" id="target-tr"></div>
+                <div class="target-input-group"><label>GPA mục tiêu (VD: 3.6)</label><input type="number" id="target-gm" step="0.01"></div>
+            </div>
+            <div class="gpa-actions">
+                <button class="btn-calc-gpa" onclick="calculateTarget()">PHÂN TÍCH</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="gpa-trigger" onclick="toggleGPA()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M19 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 4v4H7V6h10zm-6 7h-2v-2h2v2zm0 4h-2v-2h2v2zm4-4h-2v-2h2v2zm0 4h-2v-2h2v2zM9 13H7v-2h2v2zm0 4H7v-2h2v2z"/></svg>
+    </div>
+
+    <div id="chat-window" class="widget-window">
+        <div class="widget-header chat-header">
+            <span>Tiểu Linh Đồng</span>
+            <span style="cursor:pointer" onclick="toggleChat()">✕</span>
+        </div>
+        <div class="chat-body" id="chat-content">
+            <div class="msg bot">Chào bạn, mình là Tiểu Linh Đồng, bạn cần hỗ trợ gì về Nhân Văn?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input-text" placeholder="Hỏi gì đó...">
+            <button onclick="handleChat()" style="background:none; border:none; color:var(--primary-red); font-weight:800;">GỬI</button>
+        </div>
+    </div>
+    
+    <div id="chat-trigger" onclick="toggleChat()">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+    </div>
+
+    <script>
+        // --- CHỨC NĂNG ẢNH VÀ GỬI FORM "PHÚC" ---
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('preview-img');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    document.getElementById('upload-content').style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+        function submitMatchForm() {
+            document.getElementById('success-msg').style.display = 'block';
+            fireConfetti();
+            setTimeout(() => {
+                document.getElementById('success-msg').style.display = 'none';
+                document.getElementById('match-form').reset();
+                document.getElementById('preview-img').style.display = 'none';
+                document.getElementById('upload-content').style.display = 'block';
+            }, 4000);
+        }
+
+        // --- NÚT CHỨC NĂNG PROFILE MẢNH GHÉP ---
+        function rejectProfile(id) {
+            const card = document.getElementById(id);
+            card.style.opacity = '0.4';
+            card.style.filter = 'grayscale(100%)';
+            card.style.pointerEvents = 'none';
+        }
+
+        function acceptProfile() {
+            fireConfetti();
+            const toast = document.getElementById('global-toast');
+            toast.style.display = 'block';
+            toast.style.animation = 'slideIn 0.3s ease';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 4000);
+        }
+
+        // --- CHỨC NĂNG BỘ LỌC HỌC BỔNG (LỘC) ---
+        function toggleScholarDropdown() {
+            const dropdown = document.getElementById('loai-hoc-bong-dropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#loai-hb-container')) {
+                const dropdown = document.getElementById('loai-hoc-bong-dropdown');
+                if (dropdown) dropdown.classList.remove('active');
+            }
+        });
+
+        // Hàm cuộn mượt mà đến loại học bổng
+        function scrollToCategory(id, text) {
+            document.querySelector('#loai-hb-container .s-select').innerHTML = text + ' <i class="fas fa-chevron-down"></i>';
+            const el = document.getElementById(id);
+            if (el) {
+                const y = el.getBoundingClientRect().top + window.pageYOffset - 90;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }
+            document.getElementById('loai-hoc-bong-dropdown').classList.remove('active');
+        }
+
+        function filterScholarships(status, btnElement) {
+            const btns = document.querySelectorAll('.s-btn-status');
+            btns.forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const cards = document.querySelectorAll('.scholar-card');
+            cards.forEach(card => {
+                if (status === 'all' || card.getAttribute('data-status') === status) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            const wrappers = document.querySelectorAll('.s-category-wrapper');
+            wrappers.forEach(wrapper => {
+                let hasVisibleCard = false;
+                const innerCards = wrapper.querySelectorAll('.scholar-card');
+                
+                innerCards.forEach(c => {
+                    if (c.style.display !== 'none') {
+                        hasVisibleCard = true;
+                    }
+                });
+
+                if (hasVisibleCard) {
+                    wrapper.style.display = 'block';
+                } else {
+                    wrapper.style.display = 'none';
+                }
+            });
+        }
+
+        // --- CHATBOT ---
+        function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = (win.style.display === 'flex') ? 'none' : 'flex'; }
+        
+        const botData = [
+            { keys: ["ai là người đẹp trai nhất", "ai đẹp trai", "ai đẹp trai nhất", "đẹp trai nhất"], ans: "Thầy Hậu đẹp trai nhất" },
+            { keys: ["địa chỉ", "ở đâu"], ans: "Trường có địa chỉ ở số 336 Nguyễn Trãi, Thanh Xuân, Hà Nội." },
+            { keys: ["website", "trang web"], ans: "Bạn có thể truy cập tại: https://ussh.vnu.edu.vn." },
+            { keys: ["hotline", "số điện thoại", "liên hệ"], ans: "Hotline tuyển sinh: 0862.155.299 hoặc (024) 3858.3957." },
+            { keys: ["fanpage", "facebook"], ans: "Fanpage chính thức: 'Trường Đại học Khoa học Xã hội và Nhân văn - ĐHQGHN'." },
+            { keys: ["thời gian làm việc", "giờ làm việc"], ans: "Sáng từ 8h00 - 12h00, chiều từ 13h30 - 17h30 (từ thứ 2 đến thứ 6)." },
+            { keys: ["phương thức", "xét tuyển bằng", "tuyển sinh theo"], ans: "Thường gồm: Xét điểm thi THPT, xét điểm thi ĐGNL (HSA), xét tuyển thẳng và chứng chỉ quốc tế (IELTS, SAT...)." },
+            { keys: ["đăng ký xét tuyển", "cách đăng ký"], ans: "Bạn đăng ký trực tuyến qua cổng thông tin của Bộ GD&ĐT hoặc theo hướng dẫn riêng tại web tuyển sinh của trường." },
+            { keys: ["chuyển ngành", "đổi ngành"], ans: "Có, nếu bạn đáp ứng đủ điều kiện về điểm đầu vào và kết quả học tập năm đầu theo quy chế của ĐHQGHN." },
+            { keys: ["học phí", "tiền học"], ans: "Học phí dao động tùy theo ngành (ngành chuẩn, ngành chất lượng cao hoặc tự chủ tài chính). Trung bình từ 15 - 35 triệu VNĐ/năm." },
+            { keys: ["loại học bổng", "có học bổng"], ans: "Học bổng khuyến khích học tập (theo kỳ), học bổng của các doanh nghiệp/tổ chức và học bổng trao đổi quốc tế." },
+            { keys: ["nhận học bổng", "điều kiện học bổng", "khuyến khích học tập"], ans: "Bạn cần có điểm trung bình học tập từ loại Khá trở lên và điểm rèn luyện tốt, không bị kỷ luật." },
+            { keys: ["miễn giảm", "giảm học phí"], ans: "Có, dành cho đối tượng chính sách, vùng sâu vùng xa, hộ nghèo theo quy định của Nhà nước." },
+            { keys: ["hạn nộp học phí", "khi nào nộp", "khi nào đóng"], ans: "Thường vào giữa học kỳ qua hệ thống thanh toán trực tuyến của trường." },
+            { keys: ["bao nhiêu ngành", "các ngành"], ans: "Hiện trường đào tạo khoảng 28 ngành thuộc lĩnh vực Khoa học Xã hội và Nhân văn." },
+            { keys: ["chuẩn đầu ra", "tiếng anh", "ngoại ngữ"], ans: "Tùy theo ngành, thường yêu cầu đạt chứng chỉ B1 trở lên theo khung năng lực ngoại ngữ 6 bậc hoặc tương đương (IELTS, TOEIC...)." },
+            { keys: ["song bằng", "bằng kép"], ans: "Có, bạn có thể học thêm bằng thứ hai tại Nhân văn hoặc các trường khác trong ĐHQGHN sau khi hết năm nhất." },
+            { keys: ["ký túc xá", "ktx"], ans: "Sinh viên thường ở tại KTX Mễ Trì hoặc KTX Ngoại ngữ." },
+            { keys: ["đăng ký ktx", "vào ktx"], ans: "Bạn đăng ký trực tuyến qua website của Ban Quản lý KTX ĐHQGHN sau khi có giấy báo nhập học." },
+            { keys: ["câu lạc bộ", "clb"], ans: "Có hơn 30 CLB từ học thuật, tình nguyện đến nghệ thuật, thể thao." },
+            { keys: ["tình nguyện", "mùa hè xanh", "hoạt động"], ans: "Bạn có thể theo dõi thông tin tuyển cộng tác viên trên fanpage của Đoàn trường hoặc các Đội Tình nguyện xung kích." },
+            { keys: ["thư viện"], ans: "Thư viện nằm tại nhà M và bạn cũng có thể sử dụng Trung tâm Thư viện và Tri thức số ĐHQGHN tại Mễ Trì." },
+            { keys: ["mượn sách"], ans: "Bạn sử dụng thẻ sinh viên (hoặc thẻ tích hợp) để mượn sách trực tiếp hoặc đặt qua hệ thống online." },
+            { keys: ["wifi", "mạng"], ans: "Có, wifi phủ sóng toàn bộ khuôn viên trường dành cho cán bộ và sinh viên." },
+            { keys: ["nhà ăn", "canteen", "căng tin", "ăn uống"], ans: "Canteen nằm ở khu vực nhà B-C." },
+            { keys: ["giấy xác nhận", "xác nhận sinh viên"], ans: "Bạn đăng ký tại bộ phận Một cửa (Phòng Chính trị và Công tác Học sinh Sinh viên) tại tầng 1 nhà E." },
+            { keys: ["mất thẻ", "làm lại thẻ"], ans: "Bạn lên phòng Công tác HSSV để làm thủ tục báo mất và đăng ký cấp lại thẻ." },
+            { keys: ["đăng ký tín chỉ", "đăng ký học"], ans: "Đăng ký qua cổng thông tin portal: http://dangkyhoc.vnu.edu.vn/." },
+            { keys: ["quên mật khẩu", "mất mật khẩu"], ans: "Bạn liên hệ phòng Đào tạo để được hỗ trợ cấp lại mật khẩu." },
+            { keys: ["bảo lưu"], ans: "Bạn cần viết đơn, có minh chứng lý do và nộp tại phòng Đào tạo để được xét duyệt." },
+            { keys: ["việc làm", "thực tập", "giới thiệu"], ans: "Có, thông qua Trung tâm Hỗ trợ sinh viên và các ngày hội việc làm (Job Fair) thường niên." },
+            { keys: ["quân sự", "quốc phòng"], ans: "Sinh viên thường đi học quân sự tập trung tại Trung tâm Giáo dục Quốc phòng và An ninh ở Hòa Lạc." },
+            { keys: ["gửi xe", "để xe", "bãi xe"], ans: "Có bãi gửi xe và khu vực sân trường dành cho sinh viên." },
+            { keys: ["đồng phục", "áo trường", "áo khoa"], ans: "Bạn có thể mua tại văn phòng Đoàn thanh niên hoặc các đợt mở bán đầu năm học." },
+            { keys: ["phản ánh", "góp ý", "chất lượng"], ans: "Qua hòm thư góp ý trực tuyến hoặc các đợt khảo sát lấy ý kiến người học cuối mỗi kỳ." }
+        ];
+
+        function handleChat() { 
+            const input = document.getElementById('chat-input-text'); 
+            const content = document.getElementById('chat-content'); 
+            const userText = input.value.trim().toLowerCase();
+            if(!userText) return; 
+            content.innerHTML += `<div class="msg user">${input.value}</div>`; 
+            input.value = ''; 
+            setTimeout(() => { 
+                let reply = "Xin lỗi, câu này khó quá mình chưa có dữ liệu 😢. Bạn thử dùng các từ khóa như 'học phí', 'ký túc xá', 'tín chỉ', 'thư viện'... xem sao nhé!";
+                for (let item of botData) {
+                    if (item.keys.some(key => userText.includes(key))) {
+                        reply = item.ans;
+                        break;
+                    }
+                }
+                content.innerHTML += `<div class="msg bot">${reply}</div>`; 
+                content.scrollTop = content.scrollHeight; 
+            }, 600); 
+        }
+
+        // --- GPA CALCULATOR ---
+        function toggleGPA() { const gpaWin = document.getElementById('gpa-window'); gpaWin.style.display = (gpaWin.style.display === 'flex') ? 'none' : 'flex'; }
+        function switchTab(tabId) { document.getElementById('tab-calc').style.display = (tabId === 'calc') ? 'block' : 'none'; document.getElementById('tab-target').style.display = (tabId === 'target') ? 'block' : 'none'; document.getElementById('btn-tab-calc').classList.toggle('active', tabId === 'calc'); document.getElementById('btn-tab-target').classList.toggle('active', tabId === 'target'); }
+        
+        function addSubject() { 
+            const subjectList = document.getElementById('subject-list'); 
+            const newRow = document.createElement('div'); 
+            newRow.className = 'subject-row'; 
+            newRow.innerHTML = `<input type="number" class="credit-input" placeholder="TC" min="1"><select class="grade-input"><option value="" disabled selected>Chọn</option><option value="4.0">A+ (4.0)</option><option value="3.7">A (3.7)</option><option value="3.5">B+ (3.5)</option><option value="3.0">B (3.0)</option><option value="2.5">C+ (2.5)</option><option value="2.0">C (2.0)</option><option value="1.5">D+ (1.5)</option><option value="1.0">D (1.0)</option><option value="0.0">F (0.0)</option></select><button class="btn-remove" onclick="removeSubject(this)">✕</button>`; 
+            subjectList.insertBefore(newRow, subjectList.querySelector('.gpa-actions')); 
+        }
+        
+        function removeSubject(btn) { if(document.querySelectorAll('.subject-row').length > 1) btn.parentElement.remove(); }
+        
+        function calculateGPA() {
+            const rows = document.querySelectorAll('#tab-calc .subject-row');
+            let totalCredits = 0, totalPoints = 0, isValid = true;
+            rows.forEach(row => {
+                const creditVal = row.querySelector('.credit-input').value;
+                const gradeVal = row.querySelector('.grade-input').value;
+                if (creditVal && gradeVal) {
+                    const credits = parseFloat(creditVal);
+                    const grade = parseFloat(gradeVal);
+                    if(credits > 0) { totalCredits += credits; totalPoints += (credits * grade); }
+                } else if (creditVal || gradeVal) { isValid = false; }
+            });
+            if (!isValid) { alert("Vui lòng nhập đủ số Tín chỉ và Điểm chữ cho các môn bạn đang điền!"); return; }
+            if (totalCredits === 0) { alert("Bạn chưa nhập thông tin môn học hợp lệ nào!"); return; }
+            const gpa = totalPoints / totalCredits;
+            document.getElementById('final-gpa').innerText = gpa.toFixed(2);
+            document.getElementById('gpa-result-box').style.display = 'block';
+            document.getElementById('subject-list').scrollTop = 0;
+        }
+
+        function calculateTarget() {
+            const G0 = parseFloat(document.getElementById('target-g0').value);
+            const T0 = parseFloat(document.getElementById('target-t0').value);
+            const Tr = parseFloat(document.getElementById('target-tr').value);
+            const Gm = parseFloat(document.getElementById('target-gm').value);
+            if (isNaN(G0) || isNaN(T0) || isNaN(Tr) || isNaN(Gm)) { alert("Vui lòng nhập đầy đủ 4 thông số!"); return; }
+            const x = (Gm * (T0 + Tr) - G0 * T0) / Tr;
+            const resultBox = document.getElementById('target-result-box');
+            if (x > 4.0) { resultBox.innerHTML = `❌ <strong>Bất khả thi!</strong><br>Bạn cần đạt GPA <strong>${x.toFixed(2)}</strong> cho phần còn lại. Mức này vượt quá trần 4.0, hãy đặt mục tiêu thấp hơn nhé.`; resultBox.style.display = 'block'; return; }
+            fireConfetti();
+            if (x <= 0) { resultBox.innerHTML = `✅ <strong>Quá dễ dàng!</strong><br>Điểm hiện tại của bạn đã đủ cân mốc mục tiêu này. Hãy cứ học thoải mái nhé!`; resultBox.style.display = 'block'; return; }
+            
+            const targetVal = (x - 3) * Tr;
+            let bestPlan = null, minA = Tr + 1;
+            for (let a = 0; a <= Tr; a++) {
+                for (let b = 0; b <= Tr - a; b++) {
+                    let c = Tr - a - b;
+                    if (a + 0.5 * b >= targetVal) {
+                        if (a < minA) { minA = a; bestPlan = {a, b, c}; }
+                        else if (a === minA && bestPlan) { if (b < bestPlan.b) bestPlan = {a, b, c}; }
+                    }
+                }
+            }
+            let html = `🎯 <strong>Khả thi!</strong> Bạn cần đạt GPA <strong>${x.toFixed(2)}</strong> cho ${Tr} tín chỉ còn lại.<br><hr style="margin: 10px 0; border: 0; border-top: 1px dashed var(--primary-red);">`;
+            if (x <= 3.0) { html += `Mục tiêu khá dễ thở, bạn chỉ cần điểm trung bình tương đương mức B trở xuống.`; }
+            else if (bestPlan) { html += `<strong>Gợi ý lộ trình dễ đạt nhất:</strong><br>• <strong>${bestPlan.a}</strong> tín chỉ điểm A (4.0/3.7)<br>• <strong>${bestPlan.b}</strong> tín chỉ điểm B+ (3.5)<br>• <strong>${bestPlan.c}</strong> tín chỉ điểm B (3.0)`; }
+            else { html += `Bạn cần kết hợp với điểm A+ hoặc xem lại số liệu nhập vào.`; }
+            resultBox.innerHTML = html; resultBox.style.display = 'block';
+        }
+
+        // --- HIỆU ỨNG PHÁO GIẤY ---
+        function fireConfetti() { 
+            var duration = 2 * 1000; var end = Date.now() + duration; 
+            (function frame() { 
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#D32F2F', '#FFEBEE'] }); 
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#D32F2F', '#FFEBEE'] }); 
+                if (Date.now() < end) requestAnimationFrame(frame); 
+            }()); 
+        }
+    </script>
+</body>
+</html>
